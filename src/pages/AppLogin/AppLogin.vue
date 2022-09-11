@@ -1,3 +1,4 @@
+<!-- 登录页 -->
 <template>
 	<div class="box">
 		<div class="header">
@@ -18,7 +19,8 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter } from "vue-router"
+import useGoBack from "@/hooks/useGoBack"
 const $router = useRouter()
 //密码显示与隐藏
 const isShowPassWord = ref(false)
@@ -26,10 +28,7 @@ const changeIsShowPassWord = () => {
 	isShowPassWord.value = !isShowPassWord.value
 }
 //closeLogin
-const closeLogin = () => {
-	if(window.history.state.back===null) $router.push({path:'/home'})
-	else $router.back()
-}
+const closeLogin = useGoBack()
 </script>
 <style lang="less" scoped>
 .box {

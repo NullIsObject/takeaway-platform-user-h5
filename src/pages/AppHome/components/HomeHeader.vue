@@ -17,7 +17,7 @@
 				<div class="or-code">
 					<van-icon name="scan" />
 				</div>
-				<div class="btn-box">
+				<div class="btn-box" @click="toSearch">
 					<span class="line-between">|</span>
 					<div type="text" class="search-input">
 						推荐
@@ -29,10 +29,13 @@
 	</div>
 </template>
 <script setup lang="ts">
+import { useRouter } from "vue-router"
+const $router = useRouter()
+//跳转搜索页
+const toSearch = () => $router.push({ name: "search" })
 </script>
 <style lang="less" scoped>
 .box {
-	background-color: white;
 	padding: 0 @app-padding;
 
 	.home-header {
@@ -129,6 +132,8 @@
 					color: #fff;
 					background: linear-gradient(to left, @app-color-left, @app-color-right);
 					border-radius: 1.5rem;
+					position: relative;
+					z-index: 1;
 				}
 			}
 

@@ -1,5 +1,6 @@
+<!-- 店铺列表项 -->
 <template>
-	<div class="product-list-item-box">
+	<div class="product-list-item-box" @click="toShopPage">
 		<div class="product-list-item">
 			<div class="head-photo"></div>
 			<div class="product-message">
@@ -8,7 +9,7 @@
 				</div>
 				<div class="score">
 					<Rate size="12px" class="star" allow-half readonly v-model="a" />
-					<span>{{a}}</span>
+					<span>{{ a }}</span>
 					<span>月售100单</span>
 				</div>
 				<div class="price">
@@ -29,8 +30,12 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { Rate } from 'vant';
-const a=2.3
+import { Rate } from 'vant'
+import { useRouter } from "vue-router";
+const $router = useRouter()
+const a = 2.3
+//跳转到商品详情页
+const toShopPage = () => $router.push({ name: 'shopPage' }) 
 </script>
 <style>
 .product-message .score .star > * {

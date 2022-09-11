@@ -3,7 +3,7 @@
 		<van-icon name="shop-o" />
 		附近商家
 	</div>
-	<AppProductList/>
+	<ShopItem/>
 </template>
 
 <style lang="less" scoped>
