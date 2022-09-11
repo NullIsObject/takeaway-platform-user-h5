@@ -1,5 +1,6 @@
 <template>
-	<div class="order-food" :ref="localLinkData.scrollBox" @scroll="localLinkData.setCheckedTitle">
+	<div class="order-food" :ref="localLinkData.scrollBox" @scroll="localLinkData.setCheckedTitle"
+		:class="isGlobalScrollTouchBottom && 'isScroll'">
 		<!-- 广告位 -->
 		<div class="ad-box">
 			<div class="ad"></div>
@@ -35,35 +36,50 @@
 	</div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch, onBeforeUnmount } from "vue";
 import localLink from "@/utils/local-link";
-// 菜单锚点跳转功能
 const localLinkData = (() => {
-	const scrollBox = ref<HTMLElement | null>(null)
-	const targetElLists = ref<HTMLElement[]>([])
-	const linkTo = ref<(target: HTMLElement) => void>(() => { })
-	const checkedTitle = ref(0)
-	const setCheckedTitle = () => {
+	// 菜单锚点跳转功能
+	const scrollBox = ref<HTMLElement | null>(null)//锚点跳转的父节点
+	const targetElLists = ref<HTMLElement[]>([])//锚点跳转目标节点数组
+	const linkTo = ref<(target: HTMLElement) => void>(() => { })//实现锚点跳转的方法
+	const checkedTitle = ref(0)//当前跳转到的位置
+	onMounted(() => linkTo.value = localLink(scrollBox.value as HTMLElement))//获取实现锚点跳转的方法
+	const setCheckedTitle = () => {//修改跳转的位置，绑定scrollBox的@scoll
 		for (let i = 0; i < targetElLists.value.length; i++) {
 			let targetEl = targetElLists.value[i]
-			if (targetEl.getBoundingClientRect().y + targetEl.offsetHeight / 2 >= 0) {
-				checkedTitle.value = i
-				break
-			}
+			const scrollBoxPageY = (scrollBox.value as HTMLElement).getBoundingClientRect().y
+			const childPageY = targetEl.getBoundingClientRect().y
+			if (childPageY <= scrollBoxPageY) checkedTitle.value = i
 		}
 	}
-	onMounted(() => {
-		linkTo.value = localLink(scrollBox.value as HTMLElement)
-	})
-	const localLinkData = {
+
+	return {
 		scrollBox,
 		targetElLists,
 		linkTo,
 		checkedTitle,
 		setCheckedTitle
 	}
-	return localLinkData
 })()
+//判断全局滚动条触底
+const isGlobalScrollTouchBottom = ref(false)
+const globalScrollEvent = () => {
+	let rootScrollTop = document.documentElement.scrollTop
+	let rootScrollHeight = document.documentElement.scrollHeight
+	let viewHeight = document.body.offsetHeight
+	//↓判断滚动条是否触底，由于rootScrollHeight - (viewHeight + rootScrollTop)无法等于0，所以以1为标准
+	isGlobalScrollTouchBottom.value = rootScrollHeight - (viewHeight + rootScrollTop) < 1
+}
+watch(isGlobalScrollTouchBottom, (val) => {
+	if (val) {//由于触底的判断并非完全正确，在这里使滚动条完全触底
+		document.documentElement.scrollTop = document.documentElement.scrollHeight
+	}
+})
+window.addEventListener('scroll', globalScrollEvent)
+onBeforeUnmount(() => {
+	window.removeEventListener('scroll', globalScrollEvent)
+})
 
 const data = [
 	{
@@ -134,7 +150,11 @@ const data = [
 <style lang="less" scoped>
 .order-food {
 	height: 100%;
-	overflow-y: scroll;
+	overflow-y: hidden;
+
+	&.isScroll {
+		overflow-y: scroll;
+	}
 
 	.ad-box {
 		padding: @app-padding;
