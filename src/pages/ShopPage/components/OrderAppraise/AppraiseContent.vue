@@ -18,7 +18,7 @@
 	</div>
 </template>
 <script setup lang="ts">
-import { Rate } from 'vant';
+import { Rate } from 'vant'
 </script>
 <style lang="less" scoped>
 .appraise-content {

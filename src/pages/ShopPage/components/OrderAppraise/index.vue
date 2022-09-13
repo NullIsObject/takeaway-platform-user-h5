@@ -2,6 +2,15 @@
 	<div class="order-appraise">
 		<GradeCount />
 		<AppraiseContent />
+		<AppraiseContent />
+		<AppraiseContent />
+		<AppraiseContent />
+		<AppraiseContent />
+		<AppraiseContent />
+		<AppraiseContent />
+		<AppraiseContent />
+		<AppraiseContent />
+		<AppraiseContent />
 	</div>
 </template>
 <script setup lang="ts">

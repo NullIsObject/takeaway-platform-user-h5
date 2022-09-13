@@ -13,6 +13,6 @@ import ShopPageMain from "./components/ShopPageMain.vue"
 </script>
 <style lang="less" scoped>
 .shop-page {
-	background-color: red;
+	// background-color: red;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
-	<div class="order-food" :ref="localLinkData.scrollBox" @scroll="localLinkData.setCheckedTitle"
-		:class="isGlobalScrollTouchBottom && 'isScroll'">
+	<div class="order-food" :ref="localLinkData.scrollBox" @scroll="localLinkData.setCheckedTitle">
 		<!-- 广告位 -->
 		<div class="ad-box">
 			<div class="ad"></div>
@@ -36,7 +35,7 @@
 	</div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, watch, onBeforeUnmount, inject, Ref } from "vue";
 import localLink from "@/utils/local-link";
 const localLinkData = (() => {
 	// 菜单锚点跳转功能
@@ -62,24 +61,6 @@ const localLinkData = (() => {
 		setCheckedTitle
 	}
 })()
-//判断全局滚动条触底
-const isGlobalScrollTouchBottom = ref(false)
-const globalScrollEvent = () => {
-	let rootScrollTop = document.documentElement.scrollTop
-	let rootScrollHeight = document.documentElement.scrollHeight
-	let viewHeight = document.body.offsetHeight
-	//↓判断滚动条是否触底，由于rootScrollHeight - (viewHeight + rootScrollTop)无法等于0，所以以1为标准
-	isGlobalScrollTouchBottom.value = rootScrollHeight - (viewHeight + rootScrollTop) < 1
-}
-watch(isGlobalScrollTouchBottom, (val) => {
-	if (val) {//由于触底的判断并非完全正确，在这里使滚动条完全触底
-		document.documentElement.scrollTop = document.documentElement.scrollHeight
-	}
-})
-window.addEventListener('scroll', globalScrollEvent)
-onBeforeUnmount(() => {
-	window.removeEventListener('scroll', globalScrollEvent)
-})
 
 const data = [
 	{
@@ -149,12 +130,6 @@ const data = [
 </script>
 <style lang="less" scoped>
 .order-food {
-	height: 100%;
-	overflow-y: hidden;
-
-	&.isScroll {
-		overflow-y: scroll;
-	}
 
 	.ad-box {
 		padding: @app-padding;
