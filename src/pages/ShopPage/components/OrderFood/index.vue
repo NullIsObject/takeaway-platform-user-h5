@@ -1,5 +1,5 @@
 <template>
-	<div class="order-food" :ref="localLinkData.scrollBox" @scroll="localLinkData.setCheckedTitle">
+	<div class="order-food" @scroll="localLinkData.setCheckedTitle">
 		<!-- 广告位 -->
 		<div class="ad-box">
 			<div class="ad"></div>
@@ -37,13 +37,20 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch, onBeforeUnmount, inject, Ref } from "vue";
 import localLink from "@/utils/local-link";
+const props = defineProps<{
+	scrollBox: HTMLElement
+}>()
 const localLinkData = (() => {
 	// 菜单锚点跳转功能
 	const scrollBox = ref<HTMLElement | null>(null)//锚点跳转的父节点
+	watch(props, (value) => {
+		scrollBox.value = value.scrollBox
+		//获取实现锚点跳转的方法
+		linkTo.value = localLink(scrollBox.value as HTMLElement)
+	})
 	const targetElLists = ref<HTMLElement[]>([])//锚点跳转目标节点数组
 	const linkTo = ref<(target: HTMLElement) => void>(() => { })//实现锚点跳转的方法
 	const checkedTitle = ref(0)//当前跳转到的位置
-	onMounted(() => linkTo.value = localLink(scrollBox.value as HTMLElement))//获取实现锚点跳转的方法
 	const setCheckedTitle = () => {//修改跳转的位置，绑定scrollBox的@scoll
 		for (let i = 0; i < targetElLists.value.length; i++) {
 			let targetEl = targetElLists.value[i]
@@ -54,7 +61,6 @@ const localLinkData = (() => {
 	}
 
 	return {
-		scrollBox,
 		targetElLists,
 		linkTo,
 		checkedTitle,

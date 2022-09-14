@@ -1,7 +1,7 @@
 <template>
 	<div class="login" v-if="isLogin">
-		<tabs v-model:active="active" shrink background="transparent" swipeable class="van-tab-box" color="#029BEF"
-			line-width="1rem" sticky>
+		<tabs v-model:active="active" shrink background="transparent" class="van-tab-box" color="#029BEF" line-width="1rem"
+			sticky>
 			<tab title="全部">
 				<div class="content">
 					<AppOrderItem />
@@ -61,6 +61,7 @@ const active = ref(0)
 
 	.content {
 		height: calc(100vh - @app-header-height);
+		padding-top: @app-padding;
 	}
 }
 </style>
