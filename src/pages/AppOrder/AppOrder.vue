@@ -26,7 +26,7 @@ import AppOrderItem from './components/AppOrderItem.vue'
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 const $store = useStore()
-const isLogin = computed(() => $store.state.userdata.isLogin)
+const isLogin = computed(() => $store.state.user.isLogin)
 const active = ref(0)
 </script>
 <style lang="less">

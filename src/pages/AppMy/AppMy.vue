@@ -54,7 +54,7 @@ import MyHeader from "./components/MyHeader.vue"
 import { computed } from "vue";
 import { useStore } from "vuex";
 const $store = useStore()
-const isLogin = computed(() => $store.state.userdata.isLogin)
+const isLogin = computed(() => $store.state.user.isLogin)
 </script>
 <style scoped lang="less">
 .app-my {

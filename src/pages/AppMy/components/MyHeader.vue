@@ -2,7 +2,7 @@
 	<div class="header">
 		<div class="user-mesage">
 			<div class="user-photo"></div>
-			<div class="user-name">立即登录</div>
+			<div class="user-name">{{userData.userName}}</div>
 		</div>
 		<div class="btn-box">
 			<van-icon name="setting-o" @click="toSetting" />
@@ -11,12 +11,24 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { useRouter } from "vue-router";
-const $router = useRouter()
+import { computed, watch } from "vue";
+import { useRouter } from "vue-router"
+import { useStore } from "@/store"
+const router = useRouter()
+const store = useStore()
 //跳转设置页
-const toSetting=()=>{
-	$router.push({name:"setting"})
+const toSetting = () => {
+	router.push({ name: "setting" })
 }
+const isLogin = computed(() => store.state.user.isLogin)
+const userData = computed(() => store.state.user.userData)
+watch(isLogin, val => {
+	if(!val) return
+	if(userData.value.id?.length) return
+	//////////////////////////////////////////////////////////////////////////////////////////////登录后且不存在数据，获取数据
+}, {
+	immediate: true
+})
 </script>
 <style scoped lang="less">
 .header {

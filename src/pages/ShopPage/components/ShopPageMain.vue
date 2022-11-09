@@ -20,31 +20,12 @@
 	</main>
 </template>
 <script setup lang="ts">
-import { Tab, Tabs } from 'vant';
+import { Tab, Tabs } from 'vant'
 import { ref, watch, onBeforeUnmount, provide, onMounted } from "vue";
 import OrderFood from "./OrderFood/index.vue"
 import OrderAppraise from "./OrderAppraise/index.vue"
 import MerchantMessage from "./MerchantMessage/index.vue"
 const active = ref(0)
-
-// //判断全局滚动条触底
-// const isGlobalScrollTouchBottom = ref(false)
-// const globalScrollEvent = () => {
-// 	let rootScrollTop = document.documentElement.scrollTop
-// 	let rootScrollHeight = document.documentElement.scrollHeight
-// 	let viewHeight = document.body.offsetHeight
-// 	//↓判断滚动条是否触底，由于rootScrollHeight - (viewHeight + rootScrollTop)无法等于0，所以以1为标准
-// 	isGlobalScrollTouchBottom.value = rootScrollHeight - (viewHeight + rootScrollTop) < 1
-// }
-// watch(isGlobalScrollTouchBottom, (val) => {
-// 	if (val) {//由于触底的判断并非完全正确，在这里使滚动条完全触底
-// 		document.documentElement.scrollTop = document.documentElement.scrollHeight
-// 	}
-// })
-// window.addEventListener('scroll', globalScrollEvent)
-// onBeforeUnmount(() => {
-// 	window.removeEventListener('scroll', globalScrollEvent)
-// })
 //获取OrderFood的scrollBox
 const orderFoodScrollBox = ref<HTMLElement | null>(null)
 </script>

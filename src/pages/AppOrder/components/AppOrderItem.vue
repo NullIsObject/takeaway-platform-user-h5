@@ -68,6 +68,15 @@
 			display: flex;
 			width: calc(100% - var(--item-box-size) * 2);
 			overflow-x: scroll;
+			/* Firefox */
+			scrollbar-width: none;
+			/* IE 10+ */
+			-ms-overflow-style: none;
+
+			&::-webkit-scrollbar {
+				/* Chrome Safari */
+				display: none;
+			}
 
 			.commodity-item {
 				background-color: aqua;

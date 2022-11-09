@@ -18,5 +18,16 @@ export default defineConfig({
           additionalData:  `@import "${path.resolve(__dirname, './src/assets/style/base.less')}";`
       }
     }
+  },
+  server: {
+    port: 5173,
+    open: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:3000/',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+    }
   }
 })

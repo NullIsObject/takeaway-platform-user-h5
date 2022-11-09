@@ -3,9 +3,8 @@ import 'default-passive-events'//解决奇怪的警告
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from "./router/index"
-import store from "./store/index"
+import { store, key as storeKey } from "./store/index"
 //全局组件
-import ShopItem from "@/components/ShopItem/ShopItem.vue"
 import ToLogin from "@/components/ToLogin/ToLogin.vue"
 //组件库
 import { Icon, Col, Row } from 'vant'
@@ -18,12 +17,11 @@ import api from './api/index'
 
 const app = createApp(App)
 app.use(router)
-app.use(store)
+app.use(store, storeKey)
 //全局组件
 app.use(Icon)
 app.use(Col)
 app.use(Row)
-app.component('ShopItem', ShopItem)
 app.component('ToLogin', ToLogin)
 //全局属性
 app.config.globalProperties.$api = api

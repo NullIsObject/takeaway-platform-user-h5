@@ -1,5 +1,5 @@
 <template>
-	<div class="order-food" @scroll="localLinkData.setCheckedTitle">
+	<div class="order-food">
 		<!-- 广告位 -->
 		<div class="ad-box">
 			<div class="ad"></div>
@@ -43,11 +43,6 @@ const props = defineProps<{
 const localLinkData = (() => {
 	// 菜单锚点跳转功能
 	const scrollBox = ref<HTMLElement | null>(null)//锚点跳转的父节点
-	watch(props, (value) => {
-		scrollBox.value = value.scrollBox
-		//获取实现锚点跳转的方法
-		linkTo.value = localLink(scrollBox.value as HTMLElement)
-	})
 	const targetElLists = ref<HTMLElement[]>([])//锚点跳转目标节点数组
 	const linkTo = ref<(target: HTMLElement) => void>(() => { })//实现锚点跳转的方法
 	const checkedTitle = ref(0)//当前跳转到的位置
@@ -56,9 +51,15 @@ const localLinkData = (() => {
 			let targetEl = targetElLists.value[i]
 			const scrollBoxPageY = (scrollBox.value as HTMLElement).getBoundingClientRect().y
 			const childPageY = targetEl.getBoundingClientRect().y
-			if (childPageY <= scrollBoxPageY) checkedTitle.value = i
+			if (childPageY < scrollBoxPageY + 100) checkedTitle.value = i
 		}
 	}
+	watch(props, (value) => {
+		scrollBox.value = value.scrollBox
+		//获取实现锚点跳转的方法
+		linkTo.value = localLink(scrollBox.value as HTMLElement)
+		scrollBox.value.addEventListener('scroll', setCheckedTitle)
+	})
 
 	return {
 		targetElLists,
