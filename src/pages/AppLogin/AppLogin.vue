@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue"
 import { useRouter } from "vue-router"
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import useGoBack from "@/hooks/useGoBack"
 const $router = useRouter()
 const $store = useStore()

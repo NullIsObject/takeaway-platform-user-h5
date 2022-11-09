@@ -42,7 +42,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, reactive, computed, watch } from "vue";
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 const store = useStore()
 const thatID = '000'//当前页面店铺ID
 const thatCart = ref()//当前购物车数据

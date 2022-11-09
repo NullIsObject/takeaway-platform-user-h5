@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import MyHeader from "./components/MyHeader.vue"
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { useStore } from "@/store";
 const $store = useStore()
 const isLogin = computed(() => $store.state.user.isLogin)
 </script>

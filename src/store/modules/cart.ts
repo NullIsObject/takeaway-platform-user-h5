@@ -9,7 +9,7 @@ interface CartItem {
 		count: number
 	}>
 }
-type State = {
+export interface State {
 	cartList: Array<CartItem>
 }
 const state: State = {
@@ -28,6 +28,6 @@ const state: State = {
 		}
 	]
 }
-export default {
+export const cart = {
 	state,
 }

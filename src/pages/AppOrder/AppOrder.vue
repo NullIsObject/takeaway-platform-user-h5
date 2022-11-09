@@ -24,7 +24,7 @@
 import { Tab, Tabs } from 'vant'
 import AppOrderItem from './components/AppOrderItem.vue'
 import { computed, ref } from "vue";
-import { useStore } from "vuex";
+import { useStore } from "@/store";
 const $store = useStore()
 const isLogin = computed(() => $store.state.user.isLogin)
 const active = ref(0)
