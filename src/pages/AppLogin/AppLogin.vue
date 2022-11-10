@@ -8,8 +8,9 @@
 			密码登录
 		</div>
 		<form class="input">
-			<input type="text" placeholder="手机/用户名" v-model="userName" @keyup.enter="login" />
-			<input :type="isShowPassWord ? 'text' : 'password'" placeholder="密码" autocomplete="off" v-model="password" @keyup.enter="login" />
+			<input type="text" placeholder="手机/用户名" v-model="userName" @keyup.enter="login" ref="userNameInput" />
+			<input :type="isShowPassWord ? 'text' : 'password'" placeholder="密码" autocomplete="off" v-model="password"
+				@keyup.enter="login" />
 			<div class="password-btn" @click="changeIsShowPassWord">
 				<van-icon name="closed-eye" v-show="!isShowPassWord" />
 				<van-icon name="eye-o" v-show="isShowPassWord" />
@@ -24,18 +25,21 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, watch } from "vue"
-import { useRouter } from "vue-router"
+import { ref, computed, watch, onMounted } from "vue"
 import { useStore } from '@/store'
 import useGoBack from "@/hooks/useGoBack"
-const $router = useRouter()
 const $store = useStore()
-//密码显示与隐藏
+// 默认获取焦点
+const userNameInput = ref<null | HTMLInputElement>(null)
+onMounted(() => {
+	userNameInput.value?.focus()
+})
+// 密码显示与隐藏
 const isShowPassWord = ref(false)
 const changeIsShowPassWord = () => {
 	isShowPassWord.value = !isShowPassWord.value
 }
-//closeLogin
+// closeLogin
 const closeLogin = useGoBack()
 // login
 const isLogin = computed(() => $store.state.user.isLogin)

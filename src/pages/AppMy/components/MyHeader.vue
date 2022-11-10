@@ -1,8 +1,10 @@
 <template>
 	<div class="header">
-		<div class="user-mesage">
-			<div class="user-photo"></div>
-			<div class="user-name">{{userData.userName}}</div>
+		<div class="user-message">
+			<div class="user-photo">
+				<img :src="userInfo.photo" v-if="userInfo.photo" />
+			</div>
+			<div class="user-name">{{ userInfo.userName }}</div>
 		</div>
 		<div class="btn-box">
 			<van-icon name="setting-o" @click="toSetting" />
@@ -20,15 +22,7 @@ const store = useStore()
 const toSetting = () => {
 	router.push({ name: "setting" })
 }
-const isLogin = computed(() => store.state.user.isLogin)
-const userData = computed(() => store.state.user.userData)
-watch(isLogin, val => {
-	if(!val) return
-	if(userData.value.id?.length) return
-	//////////////////////////////////////////////////////////////////////////////////////////////登录后且不存在数据，获取数据
-}, {
-	immediate: true
-})
+const userInfo = computed(() => store.state.user.userInfo)
 </script>
 <style scoped lang="less">
 .header {
@@ -43,7 +37,7 @@ watch(isLogin, val => {
 		width: 50%;
 	}
 
-	.user-mesage {
+	.user-message {
 		display: flex;
 		align-items: center;
 
@@ -56,6 +50,13 @@ watch(isLogin, val => {
 			border-radius: 50%;
 			overflow: hidden;
 			margin-right: .5rem;
+
+			img {
+				width: 100%;
+				height: 100%;
+				background-color: #fff;
+				display: block;
+			}
 		}
 
 		.user-name {

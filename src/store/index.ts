@@ -4,9 +4,7 @@ import { user, State as User } from './modules/user'
 import { cart, State as Cart } from './modules/cart'
 
 export const key: InjectionKey<Store<State>> = Symbol()
-export function useStore() {
-	return baseUseStore(key)
-}
+export const useStore = () => baseUseStore(key)
 
 export interface State {
 	user: User,

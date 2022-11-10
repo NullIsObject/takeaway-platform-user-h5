@@ -1,9 +1,11 @@
 import config from "./config"
-export const request = config
+import { Response, LoginResData, RegisterResData, ChangePasswordResData, GetUserWalletResData, GetUserInfoResData, GetCouponInfoResData } from "@/types/api";
 interface UsernamePassword { userName: string, password: string }
-//登录
+// request
+export const request = config
+// 登录
 export const login = ({ userName, password }: UsernamePassword) => {
-	return request({
+	return request.request<Response<LoginResData>>({
 		url: '/user/login',
 		data: {
 			userName,
@@ -11,9 +13,9 @@ export const login = ({ userName, password }: UsernamePassword) => {
 		}
 	})
 }
-//注册
+// 注册
 export const register = ({ userName, password }: UsernamePassword) => {
-	return request({
+	return request.request<Response<RegisterResData>>({
 		url: '/user/register',
 		data: {
 			userName,
@@ -21,9 +23,9 @@ export const register = ({ userName, password }: UsernamePassword) => {
 		}
 	})
 }
-//修改密码
-export const password = ({ userName, password, newPassword }: UsernamePassword & { newPassword: string }) => {
-	return request({
+// 修改密码
+export const changePassword = ({ userName, password, newPassword }: UsernamePassword & { newPassword: string }) => {
+	return request.request<Response<ChangePasswordResData>>({
 		url: '/user/password',
 		data: {
 			userName,
@@ -32,19 +34,16 @@ export const password = ({ userName, password, newPassword }: UsernamePassword &
 		}
 	})
 }
-//用户钱包
-export const wallet = () => {
-	return request({
-		url: '/user/wallet'
-	})
+// 用户钱包
+export const getUserWallet = () => {
+	return request.post<Response<GetUserWalletResData>>('/user/wallet')
 }
-//用户信息
-export const info = () => {
-	return request({
-		url: '/user/info'
-	})
+// 用户信息
+export const getUserInfo = () => {
+	return request.post<Response<GetUserInfoResData>>('/user/info')
 }
-const api = {
-	request
+// 优惠券信息
+export const getCouponInfo = () => {
+	return request.post<Response<GetCouponInfoResData>>('/discount/coupon')
 }
-export default api
+export default request
