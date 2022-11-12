@@ -17,8 +17,7 @@ request.interceptors.response.use(function (response) {
 	dataFormatting(response.data)
 	return response;
 }, function (error) {
-	// 超出 2xx 范围的状态码都会触发该函数。
-	// 对响应错误做点什么
+	console.log("请求错误");
 	return Promise.reject(error);
 });
 export default request

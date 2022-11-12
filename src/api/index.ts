@@ -1,5 +1,5 @@
 import config from "./config"
-import { Response, LoginResData, RegisterResData, ChangePasswordResData, GetUserWalletResData, GetUserInfoResData, GetCouponInfoResData } from "@/types/api";
+import { Response, LoginResData, RegisterResData, ChangePasswordResData, GetUserWalletResData, GetUserInfoResData, GetCouponInfoResData } from "@/api/type";
 interface UsernamePassword { userName: string, password: string }
 // request
 export const request = config
@@ -43,7 +43,12 @@ export const getUserInfo = () => {
 	return request.post<Response<GetUserInfoResData>>('/user/info')
 }
 // 优惠券信息
-export const getCouponInfo = () => {
-	return request.post<Response<GetCouponInfoResData>>('/discount/coupon')
+export const getCouponInfo = (ids: Array<any>) => {
+	return request.request<Response<GetCouponInfoResData>>({
+		url: '/discount/coupon',
+		data: {
+			ids
+		}
+	})
 }
 export default request

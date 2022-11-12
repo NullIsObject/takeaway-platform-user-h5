@@ -1,11 +1,11 @@
 import { createRouter, RouterOptions, Router, RouteRecordRaw, createWebHistory } from "vue-router"
-import AppHome from "@/pages/AppHome/AppHome.vue"
-import AppOrder from "@/pages/AppOrder/AppOrder.vue"
-import AppMy from "@/pages/AppMy/AppMy.vue"
-import AppLogin from "@/pages/AppLogin/AppLogin.vue"
-import AppSetting from "@/pages/AppSetting/AppSetting.vue"
-import AppSearch from "@/pages/AppSearch/AppSearch.vue"
-import ShopPage from "@/pages/ShopPage/ShopPage.vue"
+const AppHome = () => import("@/pages/AppHome/AppHome.vue")
+const AppOrder = () => import("@/pages/AppOrder/AppOrder.vue")
+const AppMy = () => import("@/pages/AppMy/AppMy.vue")
+const AppLogin = () => import("@/pages/AppLogin/AppLogin.vue")
+const AppSetting = () => import("@/pages/AppSetting/AppSetting.vue")
+const AppSearch = () => import("@/pages/AppSearch/AppSearch.vue")
+const ShopPage = () => import("@/pages/ShopPage/ShopPage.vue")
 
 const routes: Array<RouteRecordRaw> = [
 	{

@@ -1,5 +1,9 @@
 <template>
-  <RouterView />
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
   <AppTabBar v-show="isShowAppTabBar" />
 </template>
 

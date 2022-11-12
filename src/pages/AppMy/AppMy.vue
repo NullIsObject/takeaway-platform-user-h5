@@ -4,15 +4,15 @@
 		<div class="app-my">
 			<div class="money">
 				<div class="item">
-					<p><span>0.00</span>元</p>
+					<p><span>{{ numeral(userWallet.money).format("0.00") }}</span>元</p>
 					<p>我的余额</p>
 				</div>
 				<div class="item">
-					<p><span>0</span>个</p>
+					<p><span>{{ userWallet.coupons.length }}</span>个</p>
 					<p>我的优惠</p>
 				</div>
 				<div class="item">
-					<p><span>0</span>分</p>
+					<p><span>{{ userWallet.score }}</span>分</p>
 					<p>我的积分</p>
 				</div>
 			</div>
@@ -51,10 +51,23 @@
 </template>
 <script setup lang="ts">
 import MyHeader from "./components/MyHeader.vue"
-import { computed } from "vue";
+import { computed, onBeforeMount, watch } from "vue";
 import { useStore } from "@/store";
-const $store = useStore()
-const isLogin = computed(() => $store.state.user.isLogin)
+import numeral from "numeral";
+const store = useStore()
+
+const isLogin = computed(() => store.state.user.isLogin)
+const userWallet = computed(() => store.state.user.userWallet)
+const updateUserWallet = () => {
+	store.dispatch("user/updateUserWallet")
+}
+
+watch(isLogin, val => {
+	if (!val) return
+	updateUserWallet()
+}, {
+	immediate: true
+})
 </script>
 <style scoped lang="less">
 .app-my {
